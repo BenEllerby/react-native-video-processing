@@ -686,6 +686,31 @@ public class Trimmer {
     executeFfmpegCommand(cmd, tempFile.getPath(), ctx, promise, "Boomerang error", null);
   }
 
+  static void watermark(String source, String watermarkSource, final Promise promise, ReactApplicationContext ctx) {
+    //ffmpeg -i video.mp4 -i watermark.png -filter_complex "overlay=10:10" video2.mp4
+    final File tempFile = createTempFile("mp4", promise, ctx);
+
+    ArrayList<String> cmd = new ArrayList<String>();
+    cmd.add("-y"); // NOTE: OVERWRITE OUTPUT FILE
+
+    // NOTE: INPUT FILE
+    cmd.add("-i");
+    cmd.add(source);
+
+    // NOTE: WATERMARK FILE
+    cmd.add("-i");
+    cmd.add(watermarkSource);
+
+    // NOTE: DO THE WATERMARK LAYER
+    cmd.add("-filter_complex");
+    cmd.add("overlay=10:10");
+
+    // NOTE: OUTPUT FILE
+    cmd.add(tempFile.getPath());
+
+    executeFfmpegCommand(cmd, tempFile.getPath(), ctx, promise, "Watermark error", null);
+  }
+
   static void reverse(String source, final Promise promise, ReactApplicationContext ctx) {
 
     final File tempFile = createTempFile("mp4", promise, ctx);

@@ -101,6 +101,12 @@ public class TrimmerManager extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void watermark(String path, String watermarkPath, Promise promise) {
+    Log.d(REACT_PACKAGE, "watermark video: " + path);
+    Trimmer.watermark(path, watermarkPath, promise, reactContext);
+  }
+
+  @ReactMethod
   private void loadFfmpeg() {
     Trimmer.loadFfmpeg(reactContext);
   }
